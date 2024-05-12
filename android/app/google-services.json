@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "930079766574",
+    "project_id": "authorize-mq-app",
+    "storage_bucket": "authorize-mq-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930079766574:android:4d9201a85b06d32d1187bf",
+        "android_client_info": {
+          "package_name": "com.example.macquarie_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWNBXJQYQ8p-Zi6nmisgWMvdcuclV_ljA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
