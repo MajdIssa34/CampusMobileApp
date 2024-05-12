@@ -18,7 +18,6 @@ All my testing were done on Chrome, Android Emulator (Pixel 3, Pixel 8 Pro), and
 
 ## Bugs and Incompatibilities 
 - I had a couple of problems when launching URLs on Android Emulator, however, they were launching perfectly on my physical mobile phone.
-- Sometimes when using my physical phone, I try to log out, but the the screen freezes for some reason, even after heavy debugging and inserting texts inside methods, and monitoring the debug console, it seems like the problem was from the phone, not from the code, since I have never faced this error when running my code on Chrome.
 - Google Sign-In is only functional on Mobile, not on Chrome.
 
 ## Installation
