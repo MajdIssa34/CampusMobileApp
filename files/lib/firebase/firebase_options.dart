@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -43,8 +44,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDoXl20ReA7g2SbBZtBIfo9Xa448oXMMFQ',
+  static FirebaseOptions web = FirebaseOptions(
+    apiKey: dotenv.env['APIKEYWEB']??"",
     appId: '1:930079766574:web:76709aad47a9226d1187bf',
     messagingSenderId: '930079766574',
     projectId: 'authorize-mq-app',
@@ -52,16 +53,16 @@ class DefaultFirebaseOptions {
     storageBucket: 'authorize-mq-app.appspot.com',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBWNBXJQYQ8p-Zi6nmisgWMvdcuclV_ljA',
+  static  FirebaseOptions android = FirebaseOptions(
+    apiKey: dotenv.env['APIKEYANDROID']??"",
     appId: '1:930079766574:android:4d9201a85b06d32d1187bf',
     messagingSenderId: '930079766574',
     projectId: 'authorize-mq-app',
     storageBucket: 'authorize-mq-app.appspot.com',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyClcZjhlKgpoAa4JQogS7gW5dHxXSt7sj4',
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: dotenv.env['APIKEYIOS']??"",
     appId: '1:930079766574:ios:87688a1c0e99ec3a1187bf',
     messagingSenderId: '930079766574',
     projectId: 'authorize-mq-app',
@@ -69,8 +70,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.macquarieApplication',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyClcZjhlKgpoAa4JQogS7gW5dHxXSt7sj4',
+  static FirebaseOptions macos = FirebaseOptions(
+    apiKey: dotenv.env['APIKEYMACOS']??"",
     appId: '1:930079766574:ios:f5a5069409e0525e1187bf',
     messagingSenderId: '930079766574',
     projectId: 'authorize-mq-app',

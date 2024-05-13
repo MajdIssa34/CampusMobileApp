@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:macquarie_application/constants/login_button.dart';
 import 'package:macquarie_application/data/coffee_shop_stores.dart';

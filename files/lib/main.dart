@@ -7,10 +7,12 @@ import 'package:macquarie_application/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase/firebase_options.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance(); 
+  await dotenv.load(fileName: "env");
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

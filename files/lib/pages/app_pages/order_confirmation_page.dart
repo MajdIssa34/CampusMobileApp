@@ -219,7 +219,7 @@ class OrderConfirmation extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.primary,
                         )),
-                    Text('\$${total}', // Displays total price.
+                    Text('\$$total', // Displays total price.
                         style: GoogleFonts.poppins(
                           fontSize: 20,
                           color: Theme.of(context).colorScheme.primary,
