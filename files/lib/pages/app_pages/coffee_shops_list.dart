@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:macquarie_application/constants/login_button.dart';
 import 'package:macquarie_application/data/coffee_shop_stores.dart';
@@ -84,11 +85,13 @@ class CoffeeShopsPage extends StatelessWidget {
                           Icon(Icons.pin_drop_outlined,
                               color: Theme.of(context).colorScheme.primary),
                           const SizedBox(width: 8),
-                          Text(
-                            'Choose one of our available locations!',
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              color: Theme.of(context).colorScheme.primary,
+                          Flexible(
+                            child: Text(
+                              'Choose one of our available locations!',
+                              style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),                      
                             ),
                           ),
                         ],

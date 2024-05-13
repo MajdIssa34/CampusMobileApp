@@ -87,6 +87,20 @@ class CartModel extends ChangeNotifier {
     return nameQuantities;
   }
 
+  // Return detailed information about cart items
+  Map<String, Map<String, dynamic>> getItemDetails() {
+    Map<String, Map<String, dynamic>> details = {};
+    _cartItems.forEach((index, quantity) {
+      var item = _coffeeItems[index];
+      details[item[0]] = {
+        'quantity': quantity,
+        'price': item[2],
+        'imagePath': item[3]
+      };
+    });
+    return details;
+  }
+
   // Remove all items from the cart.
   void removeAllItems() {
     _cartItems.clear();

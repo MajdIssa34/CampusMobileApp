@@ -164,34 +164,40 @@ class CartPage extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        final String currentDate = DateFormat('yyyy-MM-dd')
-                            .format(DateTime
-                                .now()); // Gets the current date formatted
-                        final String orderNumber = Random()
-                            .nextInt(999999)
-                            .toString()
-                            .padLeft(6, '0'); // Generates a random order number
-                        const String paymentMethod =
-                            'Credit Card'; // Defines the payment method
+                        final String currentDate =
+                            DateFormat('yyyy-MM-dd').format(DateTime.now());
+                        final String orderNumber =
+                            Random().nextInt(999999).toString().padLeft(6, '0');
+                        const String paymentMethod = 'Credit Card';
+                        String total = cart.calculateTotal();
+                        Map<String, int> getItemNames = cart.getItemNames();
+                        var itemDetails = cart.getItemDetails(); // Get detailed item info
+                        // Add order history before clearing the cart
                         await OrderHistory.addOrder(
-                            cart.calculateTotal(),
-                            cart.getItemNames(),
+                            total,
+                            getItemNames,
                             currentDate,
                             orderNumber,
                             paymentMethod,
                             '${FirebaseAuth.instance.currentUser?.email}');
+
+                        // Clear the cart
+                        Provider.of<CartModel>(context, listen: false).removeAllItems();
+
+                        // Navigate to the order confirmation page
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => OrderConfirmation(
-                                      total: cart.calculateTotal(),
-                                      items: cart.getItemNames(),
+                                      total: total,
+                                      items: getItemNames,
+                                      itemsDetails: itemDetails,
                                       date: currentDate,
                                       orderNumber: orderNumber,
                                       paymentMethod: paymentMethod,
                                       user:
                                           '${FirebaseAuth.instance.currentUser?.email}',
-                                    ))); // Navigates to the order confirmation page
+                                    )));
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(35),
@@ -214,25 +220,25 @@ class CartPage extends StatelessWidget {
                               Column(
                                 children: [
                                   Text(
-                                    'Your total is', // Displays the total cost of the cart
+                                    'Your total is',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 16,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Text(
-                                    '\$${cart.calculateTotal()}', // Calculates and displays total price
+                                    '\$${cart.calculateTotal()}',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 16,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   )
                                 ],
                               ),
                               Text(
-                                'Confirm Order', // Button text to confirm the order
+                                'Confirm Order',
                                 style: GoogleFonts.poppins(
-                                  fontSize: 16,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:macquarie_application/model/cart_model.dart';
-import 'package:provider/provider.dart';
 
 // Stateless widget to display order confirmation details.
 class OrderConfirmation extends StatelessWidget {
@@ -12,7 +10,7 @@ class OrderConfirmation extends StatelessWidget {
   final String orderNumber;
   final String paymentMethod;
   final String user;
-
+  final Map<String, Map<String, dynamic>> itemsDetails;
   // Constructor for the widget.
   const OrderConfirmation({
     super.key,
@@ -22,6 +20,7 @@ class OrderConfirmation extends StatelessWidget {
     required this.orderNumber,
     required this.paymentMethod,
     required this.user,
+    required this.itemsDetails,
   });
 
   @override
@@ -39,207 +38,198 @@ class OrderConfirmation extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Consumer<CartModel>(  // Uses Provider to access cart model.
-        builder: (context, cart, child) {
-          return Padding(
-            padding: const EdgeInsets.all(25),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: Padding(
+        padding: const EdgeInsets.all(25),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Order Summary', // Section title.
+              textAlign: TextAlign.center,
+              style: GoogleFonts.poppins(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+            ),
+            const SizedBox(height: 15),
+            const Divider(thickness: 2),
+            const SizedBox(height: 15),
+            // Displays order date, number, and payment method using rows and columns.
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(
-                  'Order Summary', // Section title.
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
-                ),
-                const SizedBox(height: 15),
-                const Divider(thickness: 2),
-                const SizedBox(height: 15),
-                // Displays order date, number, and payment method using rows and columns.
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Date", // Label for the date.
-                          style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
-                        ),
-                        Text(
-                          date, // Displays the date.
-                          style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      "Date", // Label for the date.
+                      style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
                     ),
-                    Container(
-                      height: 35,
-                      width: 1,
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Order No.", // Label for the order number.
-                          style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
-                        ),
-                        Text(
-                          "MQ$orderNumber", // Displays the order number.
-                          style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      height: 30,
-                      width: 1,
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Payment Method", // Label for payment method.
-                          style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
-                        ),
-                        Text(
-                          paymentMethod, // Displays the payment method.
-                          style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      date, // Displays the date.
+                      style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 15),
-                const Divider(thickness: 2),
-                const SizedBox(height: 15),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: cart.cartItems.length,
-                    itemBuilder: (context, index) {
-                      int productIndex = cart.cartItems.keys.elementAt(index);
-                      int quantity = cart.cartItems.values.elementAt(index);
-                      var item = cart.coffeeItems[productIndex];
-                      return ListTile(
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),  // Image with rounded corners.
-                          child: Image.asset(
-                            item[3],
-                            width: 56,
-                            height: 56,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        title: Text(
-                          item[0], // Item name.
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        subtitle: Text(
-                          'Quantity: $quantity', // Quantity of the item ordered.
-                          style: GoogleFonts.poppins(fontSize: 14),
-                        ),
-                        trailing: Text(
-                          '\$${item[2]}', // Price of the item.
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                Container(
+                  height: 35,
+                  width: 1,
+                  color: Theme.of(context).colorScheme.onBackground,
                 ),
-                const Divider(thickness: 2),
-                // Displays total price, excluding and including tax.
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Item Price (excl. GST):',
-                            style: GoogleFonts.poppins(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.primary,
-                            )),
-                        Text(() {
-                          double total = double.parse(cart.calculateTotal());
-                          return '\$${(total - total * 0.1).toStringAsFixed(2)}';  // Calculates price excluding GST.
-                        }(),
-                            style: GoogleFonts.poppins(
-                              fontSize: 16,
-                              color: Theme.of(context).colorScheme.primary,
-                            )),
-                      ],
+                    Text(
+                      "Order No.", // Label for the order number.
+                      style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('GST:',
-                            style: GoogleFonts.poppins(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.primary,
-                            )),
-                        Text(() {
-                          double total = double.parse(cart.calculateTotal());
-                          return '\$${(total * 0.1).toStringAsFixed(2)}';  // Calculates GST.
-                        }(),
-                            style: GoogleFonts.poppins(
-                              fontSize: 16,
-                              color: Theme.of(context).colorScheme.primary,
-                            )),
-                      ],
+                    Text(
+                      "MQ$orderNumber", // Displays the order number.
+                      style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
                     ),
-                    const Divider(thickness: 2),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Order Total:',
-                            style: GoogleFonts.poppins(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.primary,
-                            )),
-                        Text('\$${cart.calculateTotal()}',  // Displays total price.
-                            style: GoogleFonts.poppins(
-                              fontSize: 20,
-                              color: Theme.of(context).colorScheme.primary,
-                            )),
-                      ],
+                  ],
+                ),
+                Container(
+                  height: 30,
+                  width: 1,
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Payment Method", // Label for payment method.
+                      style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                    ),
+                    Text(
+                      paymentMethod, // Displays the payment method.
+                      style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
                     ),
                   ],
                 ),
               ],
             ),
-          );
-        },
+            const SizedBox(height: 15),
+            const Divider(thickness: 2),
+            const SizedBox(height: 15),
+            Expanded(
+              child: ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  String itemName = items.keys.elementAt(index);                 
+                  Map<String, dynamic>? details = itemsDetails[itemName];
+                  return ListTile(
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Image.asset(
+                        details?['imagePath'], // Image of the item
+                        width: 56,
+                        height: 56,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    title: Text(
+                      itemName, // Item name
+                      style: GoogleFonts.poppins(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      'Quantity: ${details?['quantity']}', // Quantity of the item ordered
+                      style: GoogleFonts.poppins(fontSize: 14),
+                    ),
+                    trailing: Text(
+                      '\$${details?['price']}', // Price of the item
+                      style: GoogleFonts.poppins(fontSize: 16),
+                    ),
+                  );
+                },
+              ),
+            ),
+            const Divider(thickness: 2),
+            // Display the total price, excluding and including tax (if applicable)
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Item Price (excl. GST):',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
+                        )),
+                    Text(() {
+                      double tot = double.parse(total);
+                      return '\$${(tot - tot * 0.1).toStringAsFixed(2)}'; // Calculates price excluding GST.
+                    }(),
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.primary,
+                        )),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('GST:',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
+                        )),
+                    Text(() {
+                      double tot = double.parse(total);
+                      return '\$${(tot * 0.1).toStringAsFixed(2)}'; // Calculates GST.
+                    }(),
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.primary,
+                        )),
+                  ],
+                ),
+                const Divider(thickness: 2),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Order Total:',
+                        style: GoogleFonts.poppins(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
+                        )),
+                    Text('\$${total}', // Displays total price.
+                        style: GoogleFonts.poppins(
+                          fontSize: 20,
+                          color: Theme.of(context).colorScheme.primary,
+                        )),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
