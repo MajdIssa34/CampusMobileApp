@@ -3,6 +3,11 @@
 ## Overview
 This Flutter application is designed to enhance the campus experience for university students by providing critical information and interactive features. It includes user authentication, an interactive campus map, a news feed, and a coffee shop interface with a shopping cart and order history functionality.
 
+
+https://github.com/user-attachments/assets/93325130-df8c-4ca2-8c27-fb232db156a8
+
+
+
 ## Main Functionality
 - **User Authentication**: Supports email and Google sign-in for personalized user experience.
 - **Interactive Campus Map**: Features detailed overlays with links to additional information about key locations on campus.
